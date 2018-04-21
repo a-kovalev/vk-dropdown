@@ -1,0 +1,206 @@
+.dropdown {
+	@icon-img: "dropdown.svg";
+	@border: #D3D9DE;
+	@hover: #F3F3F3;
+	@blue: #5181B8;
+	@text: #42648B;
+	@margin: 5px;
+	@radius: 2px;
+
+	position: relative;
+	display: inline-block;
+	width: 350px;
+
+	&__head {
+		position: relative;
+		padding-right: 30px;
+		padding-bottom: @margin;
+		border: 1px solid @border;
+		border-radius: @radius;
+		box-sizing: border-box;
+		background: #fff;
+	}
+
+	&__arrow {
+		position: absolute;
+		top: 0px; right: 0px;
+		width: 30px; height: 35px;
+		cursor: pointer;
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: 50%; left: 50%;
+			transform: translate3d(-50%, -50%, 0);
+			width: 12px; height: 12px;
+			background-image: url(@icon-img);
+			background-position: 0 -12px;
+			background-repeat: no-repeat;
+		}
+	}
+
+	&__input {
+		width: 100%;
+		height: 35px;
+		font-size: 13px;
+		padding: 0 10px;
+		margin-bottom: -@margin;
+		outline: none;
+		border: none;
+		box-sizing: border-box;
+	}
+
+	&__list {
+		position: absolute;
+		top: 100%; left: 0;
+		
+		width: 100%;
+		max-height: 250px;
+		overflow: auto;
+
+		margin: 0; padding: 0;
+		list-style: none;
+		
+		background: #fff;
+		border: 1px solid @border;
+		border-radius: @radius;
+		transform: translateY(-1px);
+		box-sizing: border-box;
+
+		display: none;
+
+		&.active {
+			display: block;
+		}
+
+		&::-webkit-scrollbar {
+			width: 14px;
+		}
+		
+		&::-webkit-scrollbar-thumb {
+			border: 4px solid rgba(0, 0, 0, 0);
+			background-clip: padding-box;
+			border-radius: 15px;
+			background-color: rgba(0, 0, 0, 0.15);
+		}
+	}
+
+	&__item {
+		min-height: 40px;
+		display: flex;
+		align-items: center;
+		padding: 8px 12px;
+		transition: background-color .3s ease-out;
+		box-sizing: border-box;
+		cursor: pointer;
+
+		&:hover {
+			background-color: @hover;
+		}
+	}
+
+	&__avatar {
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+		overflow: hidden;
+		margin-right: 10px;
+	}
+
+	&__name {
+		font-size: 12px;
+		font-weight: 500;
+		color: @text;
+	}
+
+	&__error {
+		padding: 8px 12px;
+		font-size: 13px;
+	}
+
+	&__tags {
+		margin: 0; padding: 0 @margin 0;
+		list-style: none;
+		box-sizing: border-box;
+	}
+
+	&__tag {
+		position: relative;
+		display: inline-block;
+		height: 25px;
+		
+		background: @blue;
+		border-radius: @radius;
+		
+		color: #fff;
+		font-size: 12px;
+		line-height: 25px;
+		font-weight: 500;
+
+		padding: 0 25px 0 8px;
+		margin: @margin @margin 0 0;
+	}
+
+	&__add-button {
+		position: relative;
+		height: 25px;
+		line-height: 25px;
+		padding: 0 25px 0 8px;
+		color: @text;
+		font-size: 12px;
+		font-weight: 500;
+
+		background: #DAE2EA;
+		border-radius: @radius;
+		border: none;
+		outline: none;
+		cursor: pointer;
+
+		margin: @margin 0 0;
+
+		&:hover {
+			&:after {
+				opacity: 1;
+			}
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: 50%; right: 8px;
+			transform: translateY(-50%);
+			
+			width: 12px; height: 12px;
+			background-image: url(@icon-img);
+			background-position: 0 0;
+			background-size: 12px;
+			background-repeat: no-repeat;
+			cursor: pointer;
+			opacity: .45;
+			transition: opacity .3s ease-out;
+		}
+	}
+
+	&__btn-remove {
+		position: absolute;
+		top: 50%; right: 8px;
+		transform: translateY(-50%);
+		padding: 0;
+
+		width: 12px; height: 12px;
+		background-color: transparent;
+		background-image: url(@icon-img);
+		background-repeat: no-repeat;
+		background-position: 0 -24px;
+		border: none;
+
+		cursor: pointer;
+		opacity: .45;
+		transition: opacity .3s ease-out;
+		outline: none;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
