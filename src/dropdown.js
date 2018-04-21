@@ -116,7 +116,11 @@ const Dropdown = (function() {
 				data: null,
 				singleItem: false,
 				placeholder: "Введите имя друга или email",
-				inputName: "dropdown"
+				inputName: "dropdown",
+				serverSearch: {
+					url: null,
+					fields: []
+				}
 			}
 
 			this.element = typeof elem === 'string' ? document.querySelector(elem) : elem;
@@ -227,6 +231,13 @@ const Dropdown = (function() {
 				const element = this._createItem(false);
 				list.appendChild(element);
 			}
+		}
+
+		_showListLoader() {
+			const { list } = this.elements;
+			const element = createElement('li', 'dropdown__error', "Загрузка...");
+			list.innerHTML = "";
+			list.appendChild(element);
 		}
 
 		_renderTags() {
@@ -352,40 +363,57 @@ const Dropdown = (function() {
 
 			const { data } = this.options,
 						search = input.toLowerCase(),
-						qRu2en = translit(search, 'ru2en'),
-						qEn2ru = translit(search, 'en2ru'),
-						qEnBad2ru = translit(search, 'enBad2ru'),
-						qRuBad2en2ru = translit(search, 'ruBad2en2ru');
+						arrStringSearch = [];
 
-			const result = data.filter((item, i) => {
+			arrStringSearch.push(
+				search,
+				translit(search, 'ru2en'),
+				translit(search, 'en2ru'),
+				translit(search, 'enBad2ru'),
+				translit(search, 'ruBad2en2ru')
+			);
+
+			const result = data.filter(item => {
 				let fullName = item.name.toLowerCase(),
-						nameArr = fullName.split(' '),
-						findResult = false;
+						arrNames = fullName.split(' ');
 
-				findResult = !fullName.indexOf(search) 			 ||
-										 !fullName.indexOf(qRu2en) 			 ||
-										 !fullName.indexOf(qEn2ru) 			 ||
-										 !fullName.indexOf(qEnBad2ru) 	 ||
-										 !fullName.indexOf(qRuBad2en2ru);
+				arrNames.push(fullName);
 
-				if(!findResult) {
-					for (let i = 1; i < nameArr.length; i++) {
-						const item = nameArr[i];
+				return arrNames.some(item => {
+					return arrStringSearch.some(str => !item.indexOf(str));
+				});
+			});
 
-						findResult = !item.indexOf(search) 		||
-												 !item.indexOf(qRu2en) 		||
-												 !item.indexOf(qEn2ru) 		||
-												 !item.indexOf(qEnBad2ru) ||
-												 !item.indexOf(qRuBad2en2ru);
+			if(result.length === 0) {
+				if(typeof this.options.serverSearch.url === "string") {
+					const self = this,
+								xhr = new XMLHttpRequest(),
+								query = encodeURIComponent(arrStringSearch.join(",")),
+								fields = encodeURIComponent(this.options.serverSearch.fields.join(",")),
+								params = `q=${query}&fields=${fields}`;
+					
+					xhr.open('GET', `api.php?${params}`, true);
 
-						if(findResult) {
-							return findResult;
+					xhr.onloadstart = function() {
+						self._showListLoader();
+					}
+
+					xhr.onload = function() {
+						if (this.status >= 200 && this.status < 400) {
+							const data = JSON.parse(this.response);
+							self._renderList(data);
 						}
 					};
+
+					xhr.onerror = function(error) {
+						console.error(error);
+					};
+
+					xhr.send();
 				}
 
-				return findResult;
-			});
+				return;
+			}
 
 			this._renderList(result);
 		}

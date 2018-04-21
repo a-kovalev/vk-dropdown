@@ -127,7 +127,11 @@ var Dropdown = function () {
 				data: null,
 				singleItem: false,
 				placeholder: "Введите имя друга или email",
-				inputName: "dropdown"
+				inputName: "dropdown",
+				serverSearch: {
+					url: null,
+					fields: []
+				}
 			};
 
 			this.element = typeof elem === 'string' ? document.querySelector(elem) : elem;
@@ -260,6 +264,15 @@ var Dropdown = function () {
 					var element = this._createItem(false);
 					list.appendChild(element);
 				}
+			}
+		}, {
+			key: "_showListLoader",
+			value: function _showListLoader() {
+				var list = this.elements.list;
+
+				var element = createElement('li', 'dropdown__error', "Загрузка...");
+				list.innerHTML = "";
+				list.appendChild(element);
 			}
 		}, {
 			key: "_renderTags",
@@ -407,33 +420,54 @@ var Dropdown = function () {
 
 				var data = this.options.data,
 				    search = input.toLowerCase(),
-				    qRu2en = translit(search, 'ru2en'),
-				    qEn2ru = translit(search, 'en2ru'),
-				    qEnBad2ru = translit(search, 'enBad2ru'),
-				    qRuBad2en2ru = translit(search, 'ruBad2en2ru');
+				    arrStringSearch = [];
 
 
-				var result = data.filter(function (item, i) {
+				arrStringSearch.push(search, translit(search, 'ru2en'), translit(search, 'en2ru'), translit(search, 'enBad2ru'), translit(search, 'ruBad2en2ru'));
+
+				var result = data.filter(function (item) {
 					var fullName = item.name.toLowerCase(),
-					    nameArr = fullName.split(' '),
-					    findResult = false;
+					    arrNames = fullName.split(' ');
 
-					findResult = !fullName.indexOf(search) || !fullName.indexOf(qRu2en) || !fullName.indexOf(qEn2ru) || !fullName.indexOf(qEnBad2ru) || !fullName.indexOf(qRuBad2en2ru);
+					arrNames.push(fullName);
 
-					if (!findResult) {
-						for (var _i4 = 1; _i4 < nameArr.length; _i4++) {
-							var _item = nameArr[_i4];
+					return arrNames.some(function (item) {
+						return arrStringSearch.some(function (str) {
+							return !item.indexOf(str);
+						});
+					});
+				});
 
-							findResult = !_item.indexOf(search) || !_item.indexOf(qRu2en) || !_item.indexOf(qEn2ru) || !_item.indexOf(qEnBad2ru) || !_item.indexOf(qRuBad2en2ru);
+				if (result.length === 0) {
+					if (typeof this.options.serverSearch.url === "string") {
+						var self = this,
+						    xhr = new XMLHttpRequest(),
+						    query = encodeURIComponent(arrStringSearch.join(",")),
+						    fields = encodeURIComponent(this.options.serverSearch.fields.join(",")),
+						    params = "q=" + query + "&fields=" + fields;
 
-							if (findResult) {
-								return findResult;
+						xhr.open('GET', "api.php?" + params, true);
+
+						xhr.onloadstart = function () {
+							self._showListLoader();
+						};
+
+						xhr.onload = function () {
+							if (this.status >= 200 && this.status < 400) {
+								var _data = JSON.parse(this.response);
+								self._renderList(_data);
 							}
 						};
+
+						xhr.onerror = function (error) {
+							console.error(error);
+						};
+
+						xhr.send();
 					}
 
-					return findResult;
-				});
+					return;
+				}
 
 				this._renderList(result);
 			}
