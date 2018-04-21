@@ -5,13 +5,141 @@
 	<title>Dropdown</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="../dist/dropdown.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
-	<div class="drpdwn" id="drpdwn1"></div>
+	<header class="header">
+		<div class="dscrptn container">
+			<img src="img/200.png" class="dscrptn__img" alt="" />
 
-	<script src="../dist/dropdown.js"></script>
+			<div class="dscrptn__inner">
+				<h1 class="dscrptn__title">Dropdown UI</h1>
+				<span class="dscrptn__text">Выпадающий список множественного выбора с поиском, автозаполнением.</span>
+				<a href="https://github.com/a-kovalev/vk-dropdown" target="_blank" class="button">Смотреть на GitHub</a>
+			</div>
+		</div>
+	</header>
+
+	<section class="demos container">
+		<h2 class="demos__title">Demos</h2>
+		
+		<div class="demos__items">
+			<div class="demos__item">
+				<span class="demos__label">Single item select</span>
+				<div id="single"></div>
+			</div>
+
+			<div class="demos__item">
+				<span class="demos__label">Multiple select</span>
+				<div id="multiple"></div>
+			</div>
+			
+			<div class="demos__item">
+				<span class="demos__label">Without avatars</span>
+				<div id="without-avatars"></div>
+			</div>
+			
+			<div class="demos__item">
+				<span class="demos__label">Server search</span>
+				<div id="server-search"></div>
+			</div>
+
+			<div class="demos__item demos__item_100">
+<pre class="snippet">
+<code>
+<span class="sn-keyword">const</span> <span class="sn-variable">dropdown</span> <span class="sn-operator">= new</span> Dropdown(<span class="sn-string">"#dropdown"</span>, {
+    data: [{...}],                               <span class="sn-comment">// !REQUIRE default null</span>
+    avatar: <span class="sn-boolean">true</span>,                                <span class="sn-comment">// default true</span>
+    singleItem: <span class="sn-boolean">false</span>,                           <span class="sn-comment">// default false</span>
+    placeholder: <span class="sn-string">"Введите имя друга или email"</span>,
+    inputName: <span class="sn-string">"dropdown"</span>,                       <span class="sn-comment">// default "dropdown"</span>
+    serverSearch: {
+      url: <span class="sn-string">"http://api.com/"</span>,                    <span class="sn-comment">// default null</span>
+      fields: [<span class="sn-string">'link'</span>, <span class="sn-string">'city'</span>]                   <span class="sn-comment">// default []</span>
+    }
+});
+</code>
+</pre>
+			</div>
+		</div>
+	</section>
+
+	<script src="../dist/dropdown.min.js"></script>
 	<script>
-		var dropdown,
+		var data = [
+			{
+				id: 1,
+				name: "Андрей Рогозов",
+				link: "https://vk.com/andrew",
+				avatar: "https://pp.userapi.com/c837536/v837536492/2f070/HT6-ucTq-cQ.jpg"
+			}, {
+				id: 2,
+				name: "Алена Хроменкова",
+				link: "https://vk.com/a_l_e_n_a_h",
+				avatar: "https://pp.userapi.com/c840324/v840324030/71f5b/bxv2XXs-BIo.jpg"
+			}, {
+				id: 3,
+				name: "Вася Вакуленко",
+				link: "https://vk.com/basta",
+				avatar: "https://pp.userapi.com/c604517/v604517351/48229/zfEEvkd45N4.jpg"
+			}, {
+				id: 4,
+				name: "Данила Поперечный",
+				link: "https://vk.com/spoontamer",
+				avatar: "https://pp.userapi.com/c841636/v841636119/4ca47/weaF8Tl2SLc.jpg"
+			}, {
+				id: 5,
+				name: "Сергей Миронов",
+				link: "https://vk.com/mironov_sergey",
+				avatar: "https://pp.userapi.com/c639618/v639618116/53515/NT23MdYL8lw.jpg"
+			}, {
+				id: 6,
+				name: "Алиса Вокс",
+				link: "https://vk.com/alisavox",
+				avatar: "https://pp.userapi.com/c846419/v846419971/2204f/g6r8YkiRbOg.jpg"
+			}, {
+				id: 7,
+				name: "Илья Прусикин",
+				link: "https://vk.com/iliyaprusikin",
+				avatar: "https://pp.userapi.com/c631625/v631625876/13ca4/yln7V_sKzpk.jpg"
+			}, {
+				id: 8,
+				name: "Покрас Лампас",
+				link: "https://vk.com/pokraslampas",
+				avatar: "https://pp.userapi.com/c834102/v834102047/11a163/ox62VLyoouc.jpg"
+			}, {
+				id: 9,
+				name: "Любовь Аксенова",
+				link: "https://vk.com/aksenovalove",
+				avatar: "https://pp.userapi.com/c631325/v631325895/3187b/yoezdDU32wE.jpg"
+			}, {
+				id: 10,
+				name: "Alina Pasok",
+				link: "https://vk.com/alinapasok",
+				avatar: "https://sun9-3.userapi.com/c840438/v840438592/50025/RW5XIBkz1Fw.jpg"
+			}, {
+				id: 11,
+				name: "Саша Петров",
+				link: "https://vk.com/sasha.petrov",
+				avatar: "https://pp.userapi.com/c631926/v631926198/3b8a9/5q9s--3MYZk.jpg"
+			}
+		];
+
+		var single = new Dropdown("#single", { 
+			data: data,
+			singleItem: true
+		});
+
+		var multiple = new Dropdown("#multiple", { 
+			data: data
+		});
+
+		var withoutAvatars = new Dropdown("#without-avatars", { 
+			data: data,
+			avatar: false
+		});
+
+		var serverSearch,
 				xhr = new XMLHttpRequest();
 
 		xhr.open('GET', 'api.php', true);
@@ -24,7 +152,7 @@
 
 			var data = JSON.parse(this.responseText);
 
-			dropdown = new Dropdown("#drpdwn1", { 
+			serverSearch = new Dropdown("#server-search", { 
 				data: data,
 				serverSearch: {
 					url: "http://localhost:8888/dropdown/example/api.php",

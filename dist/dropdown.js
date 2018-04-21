@@ -464,9 +464,8 @@ var Dropdown = function () {
 						};
 
 						xhr.send();
+						return;
 					}
-
-					return;
 				}
 
 				this._renderList(result);

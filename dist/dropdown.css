@@ -42,6 +42,7 @@
   margin-bottom: -5px;
   outline: none;
   border: none;
+  background: transparent;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -62,6 +63,7 @@
           transform: translateY(-1px);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  z-index: 999;
   display: none;
 }
 .dropdown__list.active {
