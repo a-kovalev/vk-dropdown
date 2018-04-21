@@ -3,8 +3,8 @@
 	$data = json_decode($dataString, true);
 
 	if(empty($_GET['q']) || empty($_GET['fields'])) {
-		$allowedFields = ['id', 'name', 'avatar'];
-		$result = [];
+		$allowedFields = array('id', 'name', 'avatar');
+		$result = array();
 		
 		foreach ($data as $i => $item) {
 			foreach ($item as $field => $value) {
