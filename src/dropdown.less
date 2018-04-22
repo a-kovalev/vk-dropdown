@@ -1,5 +1,5 @@
 .dropdown {
-	@icon-img: "dropdown.svg";
+	@icon-img: "dropdown.png";
 	@border: #D3D9DE;
 	@hover: #F3F3F3;
 	@blue: #5181B8;
@@ -31,10 +31,12 @@
 			content: "";
 			position: absolute;
 			top: 50%; left: 50%;
-			transform: translate3d(-50%, -50%, 0);
-			width: 12px; height: 12px;
+			margin-top: -3px;
+			margin-left: -6px;
+			width: 12px; height: 7px;
 			background-image: url(@icon-img);
 			background-position: 0 -12px;
+			background-size: 12px;
 			background-repeat: no-repeat;
 		}
 	}
@@ -102,11 +104,16 @@
 	}
 
 	&__avatar {
-		width: 25px;
-		height: 25px;
+		display: inline-block;
+		width: 35px;
+		height: 35px;
+		margin-right: 10px;
+	}
+
+	&__avatar-img {
+		width: 100%;
 		border-radius: 50%;
 		overflow: hidden;
-		margin-right: 10px;
 	}
 
 	&__name {
@@ -145,20 +152,23 @@
 
 	&__add-button {
 		position: relative;
+		display: inline-block;
 		height: 25px;
-		line-height: 25px;
-		padding: 0 25px 0 8px;
-		color: @text;
-		font-size: 12px;
-		font-weight: 500;
-
+		
 		background: #DAE2EA;
 		border-radius: @radius;
+
+		color: @text;
+		font-size: 12px;
+		line-height: 25px;
+		font-weight: 500;
+
+		padding: 0 25px 0 8px;
+		margin: @margin 0 0;
+
 		border: none;
 		outline: none;
 		cursor: pointer;
-
-		margin: @margin 0 0;
 
 		&:hover {
 			&:after {
@@ -189,11 +199,12 @@
 		transform: translateY(-50%);
 		padding: 0;
 
-		width: 12px; height: 12px;
+		width: 10px; height: 10px;
 		background-color: transparent;
 		background-image: url(@icon-img);
 		background-repeat: no-repeat;
 		background-position: 0 -24px;
+		background-size: 12px;
 		border: none;
 
 		cursor: pointer;

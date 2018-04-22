@@ -1,10 +1,79 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Object.assign polyfill
+ *
+ */
+if (typeof Object.assign != 'function') {
+	Object.defineProperty(Object, "assign", {
+		value: function assign(target, varArgs) {
+			'use strict';
+
+			if (target == null) {
+				throw new TypeError('Cannot convert undefined or null to object');
+			}
+
+			var to = Object(target);
+
+			for (var index = 1; index < arguments.length; index++) {
+				var nextSource = arguments[index];
+
+				if (nextSource != null) {
+					for (var nextKey in nextSource) {
+						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+							to[nextKey] = nextSource[nextKey];
+						}
+					}
+				}
+			}
+			return to;
+		},
+		writable: true,
+		configurable: true
+	});
+}
+
+/**
+ * Matches polyfill
+ *
+ */
+if (!Element.prototype.matches) {
+	(function (e) {
+		var matches = e.matches || e.matchesSelector || e.webkitMatchesSelector || e.mozMatchesSelector || e.msMatchesSelector || e.oMatchesSelector;
+
+		!matches ? e.matches = e.matchesSelector = function matches(selector) {
+			var matches = document.querySelectorAll(selector);
+			var th = this;
+			return Array.prototype.some.call(matches, function (e) {
+				return e === th;
+			});
+		} : e.matches = e.matchesSelector = matches;
+	})(Element.prototype);
+}
+
+/**
+ * Closest polyfill
+ *
+ */
+if (!Element.prototype.closest) {
+	(function (e) {
+		e.matches = e.matches || e.mozMatchesSelector || e.msMatchesSelector || e.oMatchesSelector || e.webkitMatchesSelector;
+
+		e.closest = e.closest || function closest(selector) {
+			if (!this) return null;
+			if (this.matches(selector)) return this;
+			if (!this.parentElement) {
+				return null;
+			} else return this.parentElement.closest(selector);
+		};
+	})(Element.prototype);
+}
 
 var Dropdown = function () {
 	'use strict';
@@ -20,7 +89,10 @@ var Dropdown = function () {
 
 	function createElement(type, className, text) {
 		var elem = document.createElement(type);
-		elem.className = className;
+
+		if (className) {
+			elem.className = className;
+		}
 
 		if (text) {
 			elem.innerText = text;
@@ -37,7 +109,7 @@ var Dropdown = function () {
   * @returns {boolean}
   */
 	function hasClass(el, className) {
-		if ((typeof el === "undefined" ? "undefined" : _typeof(el)) !== "object" && typeof className !== "string") return;
+		if ((typeof el === 'undefined' ? 'undefined' : _typeof(el)) !== "object" && typeof className !== "string") return;
 		return el.classList.contains(className);
 	}
 
@@ -111,7 +183,7 @@ var Dropdown = function () {
 				var elements = document.querySelectorAll(elem);
 
 				if (elements.length === 0) {
-					console.error("Dropdown: \u0421\u0435\u043B\u0435\u043A\u0442\u043E\u0440 " + elem + " \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D!");
+					console.error('Dropdown: \u0421\u0435\u043B\u0435\u043A\u0442\u043E\u0440 ' + elem + ' \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D!');
 					return false;
 				}
 
@@ -149,7 +221,7 @@ var Dropdown = function () {
 		}
 
 		_createClass(Dropdown, [{
-			key: "_init",
+			key: '_init',
 			value: function _init() {
 				this._createLayout();
 				this._render();
@@ -157,7 +229,7 @@ var Dropdown = function () {
 				this._addEventListeners();
 			}
 		}, {
-			key: "_createLayout",
+			key: '_createLayout',
 			value: function _createLayout() {
 				var elements = this.elements;
 
@@ -177,10 +249,10 @@ var Dropdown = function () {
 				elements.hidden.setAttribute('type', 'hidden');
 
 				elements.arrow = createElement('span', 'dropdown__arrow');
-				elements.addButton = createElement('button', 'dropdown__add-button', "Добавить");
+				elements.addButton = createElement('div', 'dropdown__add-button', "Добавить");
 			}
 		}, {
-			key: "_createItem",
+			key: '_createItem',
 			value: function _createItem(item) {
 				var element = void 0,
 				    span = void 0;
@@ -192,9 +264,11 @@ var Dropdown = function () {
 					element.setAttribute("data-id", item.id);
 
 					if (this.options.avatar) {
-						var avatar = createElement('img', 'dropdown__avatar');
+						var avatarBlock = createElement('span', 'dropdown__avatar');
+						var avatar = createElement('img', 'dropdown__avatar-img');
 						avatar.setAttribute('src', item.avatar);
-						element.appendChild(avatar);
+						avatarBlock.appendChild(avatar);
+						element.appendChild(avatarBlock);
 					}
 
 					element.appendChild(span);
@@ -205,7 +279,7 @@ var Dropdown = function () {
 				return element;
 			}
 		}, {
-			key: "_createTag",
+			key: '_createTag',
 			value: function _createTag(obj) {
 				var element = createElement("div", "dropdown__tag", obj.name),
 				    button = createElement('button', "dropdown__btn-remove");
@@ -216,7 +290,7 @@ var Dropdown = function () {
 				return element;
 			}
 		}, {
-			key: "_render",
+			key: '_render',
 			value: function _render() {
 				var _elements = this.elements,
 				    target = _elements.target,
@@ -241,7 +315,7 @@ var Dropdown = function () {
 				target.appendChild(wrapper);
 			}
 		}, {
-			key: "_renderList",
+			key: '_renderList',
 			value: function _renderList() {
 				var _this = this;
 
@@ -266,7 +340,7 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_showListLoader",
+			key: '_showListLoader',
 			value: function _showListLoader() {
 				var list = this.elements.list;
 
@@ -275,7 +349,7 @@ var Dropdown = function () {
 				list.appendChild(element);
 			}
 		}, {
-			key: "_renderTags",
+			key: '_renderTags',
 			value: function _renderTags() {
 				var _this2 = this;
 
@@ -296,7 +370,7 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_selectItem",
+			key: '_selectItem',
 			value: function _selectItem(id) {
 				if (this.selected.length === 0) {
 					this._hideInput();
@@ -309,7 +383,7 @@ var Dropdown = function () {
 				this._updateHiddenInput();
 			}
 		}, {
-			key: "_unselect",
+			key: '_unselect',
 			value: function _unselect(id) {
 				this.selected = this.selected.filter(function (obj) {
 					return obj !== id;
@@ -323,7 +397,7 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_addEventListeners",
+			key: '_addEventListeners',
 			value: function _addEventListeners() {
 				var _elements2 = this.elements,
 				    wrapper = _elements2.wrapper,
@@ -334,7 +408,7 @@ var Dropdown = function () {
 				document.addEventListener("click", this._onClickDocument);
 			}
 		}, {
-			key: "_onClick",
+			key: '_onClick',
 			value: function _onClick(e) {
 				var target = e.target,
 				    item = target.closest(".dropdown__item");
@@ -372,7 +446,7 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_onClickDocument",
+			key: '_onClickDocument',
 			value: function _onClickDocument(e) {
 				var wrapper = this.elements.wrapper,
 				    isClickInside = wrapper.contains(e.target);
@@ -383,12 +457,12 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_onChange",
+			key: '_onChange',
 			value: function _onChange(e) {
 				this._filterList(e.target.value);
 			}
 		}, {
-			key: "_showInput",
+			key: '_showInput',
 			value: function _showInput() {
 				this.elements.input.style.display = "block";
 
@@ -397,7 +471,7 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_hideInput",
+			key: '_hideInput',
 			value: function _hideInput() {
 				this.elements.input.style.display = "none";
 
@@ -406,12 +480,12 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "_updateHiddenInput",
+			key: '_updateHiddenInput',
 			value: function _updateHiddenInput() {
 				this.elements.hidden.value = this.selected.join(",");
 			}
 		}, {
-			key: "_filterList",
+			key: '_filterList',
 			value: function _filterList(input) {
 				if (input === "") {
 					this._renderList(data);
@@ -444,9 +518,9 @@ var Dropdown = function () {
 						    xhr = new XMLHttpRequest(),
 						    query = encodeURIComponent(arrStringSearch.join(",")),
 						    fields = encodeURIComponent(this.options.serverSearch.fields.join(",")),
-						    params = "q=" + query + "&fields=" + fields;
+						    params = 'q=' + query + '&fields=' + fields;
 
-						xhr.open('GET', "api.php?" + params, true);
+						xhr.open('GET', 'api.php?' + params, true);
 
 						xhr.onloadstart = function () {
 							self._showListLoader();
@@ -471,7 +545,7 @@ var Dropdown = function () {
 				this._renderList(result);
 			}
 		}, {
-			key: "showList",
+			key: 'showList',
 			value: function showList() {
 				if (this.options.singleItem && this.selected > 0) return;
 
@@ -487,7 +561,7 @@ var Dropdown = function () {
 				}
 			}
 		}, {
-			key: "hideList",
+			key: 'hideList',
 			value: function hideList() {
 				var list = this.elements.list;
 

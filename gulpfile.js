@@ -60,7 +60,7 @@ gulp.task('less:min', () => {
 
 gulp.task('icons', () => {
 	let combined = combine.obj([
-		gulp.src('./src/*.svg'),
+		gulp.src('./src/*.png'),
 		gulp.dest('./dist/')
 	]);
 

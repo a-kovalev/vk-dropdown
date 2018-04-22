@@ -1,3 +1,82 @@
+/**
+ * Object.assign polyfill
+ *
+ */
+if (typeof Object.assign != 'function') {
+	Object.defineProperty(Object, "assign", {
+		value: function assign(target, varArgs) {
+			'use strict';
+			if (target == null) {
+				throw new TypeError('Cannot convert undefined or null to object');
+			}
+
+			var to = Object(target);
+
+			for (var index = 1; index < arguments.length; index++) {
+				var nextSource = arguments[index];
+
+				if (nextSource != null) {
+					for (var nextKey in nextSource) {
+						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+							to[nextKey] = nextSource[nextKey];
+						}
+					}
+				}
+			}
+			return to;
+		},
+		writable: true,
+		configurable: true
+	});
+}
+
+
+/**
+ * Matches polyfill
+ *
+ */
+if (!Element.prototype.matches) {
+	(function(e) {
+		var matches = e.matches || 
+									e.matchesSelector || 
+									e.webkitMatchesSelector || 
+									e.mozMatchesSelector || 
+									e.msMatchesSelector || 
+									e.oMatchesSelector;
+
+		!matches ? (e.matches = e.matchesSelector = function matches(selector) {
+			var matches = document.querySelectorAll(selector);
+			var th = this;
+			return Array.prototype.some.call(matches, function(e) {
+				return e === th;
+			});
+		}) : (e.matches = e.matchesSelector = matches);
+	})(Element.prototype);
+}
+
+
+/**
+ * Closest polyfill
+ *
+ */
+if (!Element.prototype.closest) {
+	(function(e) {
+		e.matches = e.matches || 
+								e.mozMatchesSelector || 
+								e.msMatchesSelector || 
+								e.oMatchesSelector || 
+								e.webkitMatchesSelector;
+
+		e.closest = e.closest || function closest(selector) {
+			if (!this) return null;
+			if (this.matches(selector)) return this;
+			if (!this.parentElement) {return null}
+			else return this.parentElement.closest(selector)
+		};
+	}(Element.prototype));
+}
+
+
 const Dropdown = (function() {
 	'use strict';
 
@@ -11,7 +90,10 @@ const Dropdown = (function() {
 	 */
 	function createElement(type, className, text) {
 		const elem = document.createElement(type);
-		elem.className = className;
+
+		if(className) {
+			elem.className = className;
+		}
 
 		if (text) {
 			elem.innerText = text;
@@ -163,7 +245,7 @@ const Dropdown = (function() {
 			elements.hidden.setAttribute('type', 'hidden');
 
 			elements.arrow = createElement('span', 'dropdown__arrow');			
-			elements.addButton = createElement('button', 'dropdown__add-button', "Добавить");
+			elements.addButton = createElement('div', 'dropdown__add-button', "Добавить");
 		}
 
 		_createItem(item) {
@@ -176,9 +258,11 @@ const Dropdown = (function() {
 				element.setAttribute("data-id", item.id);
 
 				if(this.options.avatar) {
-					const avatar = createElement('img', 'dropdown__avatar');
+					const avatarBlock = createElement('span', 'dropdown__avatar');
+					const avatar = createElement('img', 'dropdown__avatar-img');
 					avatar.setAttribute('src', item.avatar);
-					element.appendChild(avatar);
+					avatarBlock.appendChild(avatar);
+					element.appendChild(avatarBlock);
 				}
 
 				element.appendChild(span);

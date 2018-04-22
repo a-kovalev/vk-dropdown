@@ -9,13 +9,15 @@
 </head>
 <body>
 	<header class="header">
-		<div class="dscrptn container">
-			<img src="img/200.png" class="dscrptn__img" alt="" />
+		<div class="header__inner container">
+			<div class="dscrptn">
+				<img src="img/200.png" class="dscrptn__img" alt="" />
 
-			<div class="dscrptn__inner">
-				<h1 class="dscrptn__title">Dropdown UI</h1>
-				<span class="dscrptn__text">Выпадающий список множественного выбора с поиском, автозаполнением.</span>
-				<a href="https://github.com/a-kovalev/vk-dropdown" target="_blank" class="button">Смотреть на GitHub</a>
+				<div class="dscrptn__inner">
+					<h1 class="dscrptn__title">Dropdown UI</h1>
+					<span class="dscrptn__text">Выпадающий список множественного выбора с поиском и автозаполнением.</span>
+					<a href="https://github.com/a-kovalev/vk-dropdown" target="_blank" class="button">Смотреть на GitHub</a>
+				</div>
 			</div>
 		</div>
 	</header>
@@ -155,7 +157,7 @@
 			serverSearch = new Dropdown("#server-search", { 
 				data: data,
 				serverSearch: {
-					url: "http://localhost:8888/dropdown/example/api.php",
+					url: "http://dropdown.andreykovalev.me/api.php",
 					fields: ['link']
 				}
 			});
