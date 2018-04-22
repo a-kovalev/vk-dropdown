@@ -134,7 +134,20 @@ body {
 	display: block;
 	font-size: 20px;
 	font-weight: 600;
-	margin-bottom: 10px;
+}
+
+.demos__text {
+	font-size: 13px;
+	margin: 7px 0 10px;
+}
+
+.demos__list {
+	padding: 0;
+	list-style: none;
+}
+
+.demos__list li:before {
+	content: "- ";
 }
 
 .snippet {
