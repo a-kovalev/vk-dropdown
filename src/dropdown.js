@@ -158,12 +158,26 @@ const Dropdown = (function() {
 
 				return text;
 
-			case 'ruBad2en2ru':
+			case 'ruBad2en':
 				for (let i = 0; i < ru.length; i++) {
 					text = text.split(ru[i]).join(ruBad[i]);
 				}
 
+				return text;
+
+			case 'ruBad2en2ru':
+				for (var _i3 = 0; _i3 < ru.length; _i3++) {
+					text = text.split(ru[_i3]).join(ruBad[_i3]);
+				}
+
 				return translit(text, 'en2ru');
+
+			case 'enBad2ru2en':
+				for (let i = 0; i < ru.length; i++) {
+					text = text.split(ruBad[i]).join(ru[i]);
+				}
+
+				return translit(text, 'ru2en');
 		}
 
 		return text;
@@ -450,11 +464,13 @@ const Dropdown = (function() {
 						arrStringSearch = [];
 
 			arrStringSearch.push(
-				search,
-				translit(search, 'ru2en'),
-				translit(search, 'en2ru'),
-				translit(search, 'enBad2ru'),
-				translit(search, 'ruBad2en2ru')
+				search,														// "баста" || "basta" || ",fcnf" || "ифыеф"
+				translit(search, 'ru2en'),				// "баста" -> "basta"
+				translit(search, 'en2ru'),				// "basta" -> "баста"
+				translit(search, 'enBad2ru'),			// ",fcnf" -> "баста"
+				translit(search, 'enBad2ru2en'),	// ",fcnf" -> "basta"
+				translit(search, 'ruBad2en'),			// "ифыеф" -> "basta"
+				translit(search, 'ruBad2en2ru')		// "ифыеф" -> "баста"
 			);
 
 			const result = data.filter(item => {

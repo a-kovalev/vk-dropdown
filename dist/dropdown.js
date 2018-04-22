@@ -155,12 +155,26 @@ var Dropdown = function () {
 
 				return text;
 
+			case 'ruBad2en':
+				for (var _i4 = 0; _i4 < ru.length; _i4++) {
+					text = text.split(ru[_i4]).join(ruBad[_i4]);
+				}
+
+				return text;
+
 			case 'ruBad2en2ru':
 				for (var _i3 = 0; _i3 < ru.length; _i3++) {
 					text = text.split(ru[_i3]).join(ruBad[_i3]);
 				}
 
 				return translit(text, 'en2ru');
+
+			case 'enBad2ru2en':
+				for (var _i5 = 0; _i5 < ru.length; _i5++) {
+					text = text.split(ruBad[_i5]).join(ru[_i5]);
+				}
+
+				return translit(text, 'ru2en');
 		}
 
 		return text;
@@ -497,7 +511,14 @@ var Dropdown = function () {
 				    arrStringSearch = [];
 
 
-				arrStringSearch.push(search, translit(search, 'ru2en'), translit(search, 'en2ru'), translit(search, 'enBad2ru'), translit(search, 'ruBad2en2ru'));
+				arrStringSearch.push(search, // "баста" || "basta" || ",fcnf" || "ифыеф"
+				translit(search, 'ru2en'), // "баста" -> "basta"
+				translit(search, 'en2ru'), // "basta" -> "баста"
+				translit(search, 'enBad2ru'), // ",fcnf" -> "баста"
+				translit(search, 'enBad2ru2en'), // ",fcnf" -> "basta"
+				translit(search, 'ruBad2en'), // "ифыеф" -> "basta"
+				translit(search, 'ruBad2en2ru') // "ифыеф" -> "баста"
+				);
 
 				var result = data.filter(function (item) {
 					var fullName = item.name.toLowerCase(),
