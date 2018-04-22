@@ -18,8 +18,9 @@
 		exit;
 	}
 
-	$query = explode(",", $_GET['q']);
-	$fields = explode(",", $_GET['fields']);
+	$query = explode("--", $_GET['q']);
+	$fields = explode("--", $_GET['fields']);
+
 
 	$result = array_filter($data, function($item) {
 		global $query, $fields;
@@ -27,17 +28,17 @@
 
 		if(!$findResult) {
 			foreach ($query as $q) {
-				foreach ($fields as $field) {
+				foreach ($fields as $field) {	
 					$f = strpos(mb_strtolower($item[$field]), mb_strtolower($q));
 			
 					if($f === 0) {
-						$flag = true;
+						$findResult = true;
 					}
 				}
 			}
 		}
 
-		return $flag;
+		return $findResult;
 	});
 
 	echo json_encode(array_values($result));

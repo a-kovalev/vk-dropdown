@@ -516,8 +516,8 @@ var Dropdown = function () {
 					if (typeof this.options.serverSearch.url === "string") {
 						var self = this,
 						    xhr = new XMLHttpRequest(),
-						    query = encodeURIComponent(arrStringSearch.join(",")),
-						    fields = encodeURIComponent(this.options.serverSearch.fields.join(",")),
+						    query = encodeURIComponent(arrStringSearch.join("--")),
+						    fields = encodeURIComponent(this.options.serverSearch.fields.join("--")),
 						    params = 'q=' + query + '&fields=' + fields;
 
 						xhr.open('GET', self.options.serverSearch.url + '?' + params, true);
