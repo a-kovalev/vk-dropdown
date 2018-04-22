@@ -67,8 +67,7 @@
 	<tr>
 		<td valign="top"><code>serverSearch</code></td>
 		<td valign="top">
-			Настройки поиска на сервере:  
-			
+			Настройки поиска на сервере:
 			<table width="100%">
 				<tr>
 					<th valign="top" width="120px" align="left">Параметр</th>
