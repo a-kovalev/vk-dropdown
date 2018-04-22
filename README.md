@@ -15,7 +15,7 @@
     <script type="text/javascript" src="dropdown.min.js"></script>
     <script>
         const data = [{...}];
-        const dropdown = new Dropdown("selector", { 
+        const dropdown = new Dropdown("#drdw", { 
             data: data,
             // options
         });
@@ -36,38 +36,39 @@
 	</tr>
 	<tr>
 		<td valign="top"><code>data</code></td>
-		<td valign="top">Исходный массив объектов [Обязательный параметр!]</td>
+		<td valign="top">Исходный массив объектов [ОБЯЗАТЕЛЬНО!]</td>
 		<td valign="top"><code>array</code></td>
 		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>avatar</code></td>
-		<td valign="top">Показ аватарок пользователей</td>
+		<td valign="top">Показывать аватарки пользователей</td>
 		<td valign="top"><code>boolean</code></td>
 		<td valign="top"><code>true</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>singleItem</code></td>
-		<td valign="top">Выбор одного элемента из списка</td>
+		<td valign="top">Выбор только одного элемента из списка</td>
 		<td valign="top"><code>boolean</code></td>
 		<td valign="top"><code>false</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>placeholder</code></td>
-		<td valign="top">Placeholder на поле поиска</td>
+		<td valign="top">Placeholder на поле ввода</td>
 		<td valign="top"><code>string</code></td>
 		<td valign="top"><code>"Введите имя друга или email"</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>inputName</code></td>
-		<td valign="top">Имя hidden поля. При сабмите формы содержит ID выбранных юзеров.</td>
+		<td valign="top">Имя hidden поля, которое хранит id выбранных пользователей.</td>
 		<td valign="top"><code>string</code></td>
 		<td valign="top"><code>"dropdown"</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>serverSearch</code></td>
 		<td valign="top">
-			Настройки поиска на сервере
+			Настройки поиска на сервере:  
+			
 			<table width="100%">
 				<tr>
 					<th valign="top" width="120px" align="left">Параметр</th>
