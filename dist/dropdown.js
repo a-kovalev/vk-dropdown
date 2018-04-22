@@ -520,7 +520,7 @@ var Dropdown = function () {
 						    fields = encodeURIComponent(this.options.serverSearch.fields.join(",")),
 						    params = 'q=' + query + '&fields=' + fields;
 
-						xhr.open('GET', 'api.php?' + params, true);
+						xhr.open('GET', self.options.serverSearch.url + '?' + params, true);
 
 						xhr.onloadstart = function () {
 							self._showListLoader();
