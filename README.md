@@ -103,3 +103,10 @@ gulp
 gulp build
 gulp clean
 ```
+
+
+### TODO
+
+- [ ] Fetch API
+- [ ] Кастомные CSS классы
+- [ ] Events
