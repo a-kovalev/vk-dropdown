@@ -22,9 +22,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^4.3.11",
     "rename": "^1.0.4",
-    "stream-combiner2": "^1.1.1"
-  },
-  "dependencies": {
+    "stream-combiner2": "^1.1.1",
     "rimraf": "^2.6.2"
   }
 }
