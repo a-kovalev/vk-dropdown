@@ -21,7 +21,7 @@ gulp.task('js:min', () => {
 	let combined = combine.obj([
 		gulp.src('./src/*.js'),
 		$.babel({ presets: ['env'], plugins: ['transform-object-rest-spread'] }),
-		$.uglify(),
+		$.uglify({output: {ascii_only: true}}),
 		$.rename({ suffix: '.min' }),
 		gulp.dest('./dist/')
 	]);
