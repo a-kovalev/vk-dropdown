@@ -1,99 +1,84 @@
-'use strict'
+'use strict';
 
-const path = require('path');
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
-const combine = require('stream-combiner2');
+const webpack = require('webpack-stream');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const browserSync = require('browser-sync').create();
 const rimraf = require('rimraf');
 
-gulp.task('js', () => {
-	let combined = combine.obj([
-		gulp.src('./src/*.js'),
-		$.babel({ presets: ['env'], plugins: ['transform-object-rest-spread'] }),
-		gulp.dest('./dist/')
-	]);
+gulp.task('scripts', (done) => {
+	gulp.src('./src/scripts/dropdown.js')
+			.pipe($.plumber())
+			.pipe(webpack({
+				devtool: 'inline-source-map',
+				output: {
+					filename: 'dropdown.js',
+					library: 'Dropdown'
+				},
+				module: {
+					rules: [
+						{
+							test: /\.(js)$/,
+							exclude: [/node_modules/],
+							use: [{
+								loader: 'babel-loader',
+								options: { presets: ['env','es2015'] }
+							}]
+						}
+					]
+				},
+				plugins: [
+					new UglifyJsPlugin({ sourceMap: true }) // { sourceMap: true }
+				]
+			}))
+			.pipe(gulp.dest('./dist/scripts/'));
 
-	combined.on('error', console.error.bind(console));
-	return combined;
+	browserSync.reload();
+	done();
 });
 
-gulp.task('js:min', () => {
-	let combined = combine.obj([
-		gulp.src('./src/*.js'),
-		$.babel({ presets: ['env'], plugins: ['transform-object-rest-spread'] }),
-		$.uglify({output: {ascii_only: true}}),
-		$.rename({ suffix: '.min' }),
-		gulp.dest('./dist/')
-	]);
+gulp.task('styles', (done) => {
+	gulp.src('./src/styles/*.less')
+			.pipe($.plumber())
+			.pipe($.less())
+			.pipe($.autoprefixer({ cascade: false }))
+			.pipe($.csscomb())
+			.pipe(gulp.dest('./dist/styles'))
+			.pipe($.cssnano())
+			.pipe($.rename({ suffix: '.min' }))
+			.pipe(gulp.dest('./dist/styles'));
 
-	combined.on('error', console.error.bind(console));
-	return combined;
+	browserSync.reload();
+	done();
 });
 
-gulp.task('less', () => {
-	let combined = combine.obj([
-		gulp.src('./src/*.less'),
-		$.less(),
-		$.autoprefixer({ cascade: false }),
-		$.csscomb(),
-		gulp.dest('./dist/')
-	]);
-
-	combined.on('error', console.error.bind(console));
-	return combined;
-});
-
-gulp.task('less:min', () => {
-	let combined = combine.obj([
-		gulp.src('./src/*.less'),
-		$.less(),
-		$.autoprefixer({ cascade: false }),
-		$.csscomb(),
-		$.cssnano(),
-		$.rename({ suffix: '.min' }),
-		gulp.dest('./dist/')
-	]);
-
-	combined.on('error', console.error.bind(console));
-	return combined;
-});
-
-gulp.task('icons', () => {
-	let combined = combine.obj([
-		gulp.src('./src/*.png'),
-		gulp.dest('./dist/')
-	]);
-
-	combined.on('error', console.error.bind(console));
-	return combined;
+gulp.task('icons', (done) => {
+	gulp.src('./src/icons/*.png').pipe(gulp.dest('./dist/icons/'));
+	browserSync.reload();
+	done();
 });
 
 gulp.task('clean', (cb) => {
-	rimraf('./dist', cb);
+	return rimraf('./dist', cb);
 });
 
-gulp.task('build', [
-	'js',
-	'js:min',
-	'less',
-	'less:min',
-	'icons'
-]);
+gulp.task('build', gulp.series('clean', gulp.parallel('scripts', 'styles', 'icons')));
 
 gulp.task('watch', () => {
-	$.watch(['src/*.js'], () => {
-		gulp.start('js');
-		gulp.start('js:min');
-	});
-
-	$.watch(['src/*.less'], () => {
-		gulp.start('less');
-		gulp.start('less:min');
-	});
-
-	$.watch(['src/*.svg'], () => {
-		gulp.start('icons');
-	});
+	$.watch('src/scripts/**/*.js', gulp.series('scripts'));
+	$.watch('src/styles/**/*.less', gulp.series('styles'));
+	$.watch('src/icons/**/*.*', gulp.series('icons'));
 });
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('server', () => {
+	browserSync.init({
+		server: { baseDir: "./" },
+		cors: true,
+		port: 9000
+	});
+
+	gulp.watch(["example/**/*.*", "*.html"]).on('change', browserSync.reload);
+});
+
+gulp.task('default', gulp.series('build', gulp.parallel('server', 'watch')));
