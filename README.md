@@ -35,16 +35,10 @@
 		<th valign="top" width="60px" align="left">По умолчанию</th>
 	</tr>
 	<tr>
-		<td valign="top"><code>data</code></td>
-		<td valign="top">Исходный массив объектов [ОБЯЗАТЕЛЬНО!]</td>
+		<td valign="top"><code>items</code></td>
+		<td valign="top">Исходный массив объектов</td>
 		<td valign="top"><code>array</code></td>
 		<td valign="top"><code>null</code></td>
-	</tr>
-	<tr>
-		<td valign="top"><code>avatar</code></td>
-		<td valign="top">Показывать аватарки пользователей</td>
-		<td valign="top"><code>boolean</code></td>
-		<td valign="top"><code>true</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>singleItem</code></td>
@@ -53,16 +47,40 @@
 		<td valign="top"><code>false</code></td>
 	</tr>
 	<tr>
-		<td valign="top"><code>placeholder</code></td>
+		<td valign="top"><code>inputHiddenName</code></td>
+		<td valign="top">Имя hidden поля, которое хранит id выбранных пользователей.</td>
+		<td valign="top"><code>string</code></td>
+		<td valign="top"><code>"dropdown"</code></td>
+	</tr>
+	<tr>
+		<td valign="top"><code>searchFields</code></td>
+		<td valign="top">Список полей, по которым будет проходить поиск</td>
+		<td valign="top"><code>array</code></td>
+		<td valign="top"><code>['name']</code></td>
+	</tr>
+	<tr>
+		<td valign="top"><code>searchPlaceholder</code></td>
 		<td valign="top">Placeholder на поле ввода</td>
 		<td valign="top"><code>string</code></td>
 		<td valign="top"><code>"Введите имя друга или email"</code></td>
 	</tr>
 	<tr>
-		<td valign="top"><code>inputName</code></td>
-		<td valign="top">Имя hidden поля, которое хранит id выбранных пользователей.</td>
+		<td valign="top"><code>noResultsText</code></td>
+		<td valign="top">Сообщение, при пустом результате поиска</td>
 		<td valign="top"><code>string</code></td>
-		<td valign="top"><code>"dropdown"</code></td>
+		<td valign="top"><code>"Пользователь не найден"</code></td>
+	</tr>
+		<tr>
+		<td valign="top"><code>templateListItem</code></td>
+		<td valign="top">Шаблон вывода элемента списка</td>
+		<td valign="top"><code>function</code></td>
+		<td valign="top"><code></code></td>
+	</tr>
+		<tr>
+		<td valign="top"><code>templateSelectedItem</code></td>
+		<td valign="top">Шаблон вывода выбранного элемента</td>
+		<td valign="top"><code>function</code></td>
+		<td valign="top"><code></code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>serverSearch</code></td>
@@ -87,6 +105,24 @@
 					<td valign="top">array</td>
 					<td valign="top">[]</td>
 				</tr>
+				<tr>
+					<td valign="top"><code>paramNameQuery</code></td>
+					<td valign="top">Поле, в котором передается строка запроса</td>
+					<td valign="top">string</td>
+					<td valign="top">'q'</td>
+				</tr>
+				<tr>
+					<td valign="top"><code>paramNameFields</code></td>
+					<td valign="top">Поле, в котором передается массив полей для поиска</td>
+					<td valign="top">string</td>
+					<td valign="top">'fields'</td>
+				</tr>
+				<tr>
+					<td valign="top"><code>loadingText</code></td>
+					<td valign="top"></td>
+					<td valign="top">string</td>
+					<td valign="top">'Загрузка...'</td>
+				</tr>
 			</table>
 		</td>
 		<td valign="top"><code>object</code></td>
@@ -103,10 +139,3 @@ gulp
 gulp build
 gulp clean
 ```
-
-
-### TODO
-
-- [ ] Fetch API
-- [ ] Кастомные CSS классы
-- [ ] Events
