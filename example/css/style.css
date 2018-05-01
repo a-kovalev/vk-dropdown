@@ -190,6 +190,37 @@ body {
 	color: #AF7DFF;
 }
 
+.snippet .sn-method {
+	color: #a6e22e;
+}
+
+.snippet .sn-fn {
+	color: #66d9ef;
+}
+
+.snippet .sn-args {
+	color: #fd9720;
+}
+
+.selected-item {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.selected-item__avatar {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-right: 5px;
+}
+
 @media screen and (max-width: 700px) {
 	.dscrptn {
 		-webkit-box-orient: vertical;

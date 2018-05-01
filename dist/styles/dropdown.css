@@ -25,6 +25,7 @@
 .dropdown__s-item {
   position: relative;
   display: inline-block;
+  vertical-align: top;
   height: 25px;
   background: #5181b8;
   border-radius: 2px;

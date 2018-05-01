@@ -15,7 +15,7 @@
 
 				<div class="dscrptn__inner">
 					<h1 class="dscrptn__title">Dropdown UI</h1>
-					<span class="dscrptn__text">Модуль выпадающего списка с поиском и фильтрацией, учитывающей транслитерацию и неправильную раскладку клавиатуры.</span>
+					<span class="dscrptn__text">Модуль выпадающего списка с поиском, учитывающим транслитерацию и неправильную раскладку клавиатуры.</span>
 					<a href="https://github.com/a-kovalev/vk-dropdown" target="_blank" class="button">Смотреть на GitHub</a>
 				</div>
 			</div>
@@ -39,11 +39,32 @@
 			</div>
 			
 			<div class="demos__item">
-				<span class="demos__label">Without avatars</span>
-				<p class="demos__text">Не показывать аватарки пользователей</p>
+				<span class="demos__label">Custom template</span>
+				<p class="demos__text">Настраиваемые шаблоны вывода</p>
 				<div id="without-avatars"></div>
 			</div>
 			
+			<div class="demos__item">
+				<span class="demos__label">Callback</span>
+				<p class="demos__text">Функции обратного вызова</p>
+				<div id="callback"></div>
+			</div>
+
+			<div class="demos__item">
+				<span class="demos__label">Client-side search</span>
+				<p class="demos__text">Поиск по дополнительным полям на клиенте</p>
+				<div id="client-search"></div>
+				<ul class="demos__list">
+					<li>Андрей Рогозов (Команда ВКонтакте)</li>
+					<li>Алена Хроменкова (Команда ВКонтакте)</li>
+					<li>Вася Вакуленко (Gazgolder</li>
+					<li>Данила Поперечный (Поперечный)</li>
+					<li>Сергей Миронов (Государственная Дума ФС РФ)</li>
+					<li>Илья Прусикин (LITTLE BIG)</li>
+					<li>etc.</li>
+				</ul>
+			</div>
+
 			<div class="demos__item">
 				<span class="demos__label">Server-side search</span>
 				<p class="demos__text">Поиск по дополнительным полям на сервере</p>
@@ -61,15 +82,58 @@
 <pre class="snippet">
 <code>
 <span class="sn-keyword">const</span> <span class="sn-variable">dropdown</span> <span class="sn-operator">= new</span> Dropdown(<span class="sn-string">"#dropdown"</span>, {
-    data: [{...}],                               <span class="sn-comment">// !REQUIRE default null</span>
-    avatar: <span class="sn-boolean">true</span>,                                <span class="sn-comment">// default true</span>
-    singleItem: <span class="sn-boolean">false</span>,                           <span class="sn-comment">// default false</span>
-    placeholder: <span class="sn-string">"Введите имя друга или email"</span>,
-    inputName: <span class="sn-string">"dropdown"</span>,                       <span class="sn-comment">// default "dropdown"</span>
-    serverSearch: {
-      url: <span class="sn-string">"http://api.com/"</span>,                    <span class="sn-comment">// default null</span>
-      fields: [<span class="sn-string">'link'</span>, <span class="sn-string">'city'</span>]                   <span class="sn-comment">// default []</span>
-    }
+  <span class="sn-comment">// Base</span>
+  items: [...],
+  singleItem: <span class="sn-boolean">false</span>,
+  inputHiddenName: <span class="sn-string">'dropdown'</span>,
+
+  <span class="sn-comment">// Search</span>
+  searchFields: [<span class="sn-string">'name'</span>],
+  searchPlaceholder: <span class="sn-string">'Введите имя друга или email'</span>,
+  noResultsText: <span class="sn-string">'Пользователь не найден'</span>,
+
+  <span class="sn-comment">// Server</span>
+  serverSearch: {
+    url: <span class="sn-string">'http://api.com/'</span>,
+    fields: [<span class="sn-string">'link'</span>],
+    paramNameQuery: <span class="sn-string">'q'</span>,
+    paramNameFields: <span class="sn-string">'fields'</span>,
+    loadingText: <span class="sn-string">'Загрузка...'</span>
+  },
+
+  <span class="sn-comment">// CSS classes</span>
+  classNames: {
+    container: <span class="sn-string">'dropdown',</span>
+    head: <span class="sn-string">'dropdown__head'</span>,
+    selectedList: <span class="sn-string">'dropdown__selected'</span>,
+    selectedItem: <span class="sn-string">'dropdown__s-item'</span>,
+    removeButton: <span class="sn-string">'dropdown__remove-btn'</span>,
+    addButton: <span class="sn-string">'dropdown__add-button'</span>,
+    input: <span class="sn-string">'dropdown__input'</span>,
+    arrow: <span class="sn-string">'dropdown__arrow'</span>,
+    list: <span class="sn-string">'dropdown__list'</span>,
+    listActive: <span class="sn-string">'dropdown__list_active'</span>,
+    listItem: <span class="sn-string">'dropdown__item'</span>,
+    listItemHighlight: <span class="sn-string">'dropdown__item_hover'</span>,
+    message: <span class="sn-string">'dropdown__message'</span>
+  },
+
+  <span class="sn-comment">// Render items</span>
+  <span class="sn-method">templateListItem</span>: <span class="sn-args">item</span> <span class="sn-fn">=></span> {
+    <span class="sn-operator">return</span> <span class="sn-string">`...`</span>;
+  },
+
+  <span class="sn-method">templateSelectedItem</span>: <span class="sn-args">item</span> <span class="sn-fn">=></span> {
+    <span class="sn-operator">return</span> <span class="sn-string">`...`</span>;
+  },
+
+  <span class="sn-comment">// Callbacks</span>
+  <span class="sn-method">onInit</span>: <span class="sn-fn">function</span>() {},
+  <span class="sn-method">onDestroy</span>: <span class="sn-fn">function</span>() {},
+  <span class="sn-method">onShow</span>: <span class="sn-fn">function</span>() {},
+  <span class="sn-method">onHide</span>: <span class="sn-fn">function</span>() {},
+  <span class="sn-method">onSelect</span>: <span class="sn-fn">function</span>() {},
+  <span class="sn-method">onUnselect</span>: <span class="sn-fn">function</span>() {}
 });
 </code>
 </pre>
@@ -98,12 +162,47 @@
 					</div>
 				`;
 			},
+			
+			templateSelectedItem: item => {
+				return `
+					<div class="selected-item">
+					<img src="${item.avatar}" class="selected-item__avatar" />
+					<span class="selected-item__title">${item.name.split(' ')[0]}</span>
+				`;
+			},
 		});
+
+		var callback = new Dropdown("#callback", {
+			items: data,
+			// onInit: function() {
+			// 	alert('onInit');
+			// },
+			// onDestroy: function() {
+			// 	alert('onDestroy');
+			// },
+			onShow: function() {
+				alert('onShow');
+			},
+			onHide: function() {
+				alert('onHide');
+			},
+			onSelect: function() {
+				alert('onSelect');
+			},
+			onUnselect: function() {
+				alert('onUnselect');
+			}
+		})
+
+		var clientSearch = new Dropdown("#client-search", {
+			items:data,
+			searchFields: ['name', 'job']
+		})
 
 		var serverSearch = new Dropdown("#server-search", { 
 			items: data,
 			serverSearch: {
-				url: "http://dropdown.andreykovalev.me/api.php",
+				url: "api.php",
 				fields: ['link']
 			}
 		});
