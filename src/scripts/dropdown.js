@@ -1,5 +1,5 @@
 import { strToEl, runCallback, hasClass, extend, translit } from './lib/utils.js';
-import 'promise-polyfill';
+import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch';
 import './lib/polyfills.js';
 

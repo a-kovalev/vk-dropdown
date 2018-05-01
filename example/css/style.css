@@ -217,6 +217,9 @@ body {
 	width: 15px;
 	height: 15px;
 	border-radius: 50%;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
 	overflow: hidden;
 	margin-right: 5px;
 }

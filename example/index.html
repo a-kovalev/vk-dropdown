@@ -155,20 +155,12 @@
 
 		var withoutAvatars = new Dropdown("#without-avatars", { 
 			items: data,
-			templateListItem: item => {
-				return `
-					<div class="dropdown__item-inner">					
-						<span class="dropdown__name">${item.name}</span>
-					</div>
-				`;
+			templateListItem: function(item) {
+				return '<div class="dropdown__item-inner"><span class="dropdown__name">'+ item.name +'</span></div>';
 			},
 			
-			templateSelectedItem: item => {
-				return `
-					<div class="selected-item">
-					<img src="${item.avatar}" class="selected-item__avatar" />
-					<span class="selected-item__title">${item.name.split(' ')[0]}</span>
-				`;
+			templateSelectedItem: function(item) {
+				return '<div class="selected-item"><span style="background-image: url('+ item.avatar +')" class="selected-item__avatar"></span><span class="selected-item__title">'+item.name.split(' ')[0]+'</span>';
 			},
 		});
 

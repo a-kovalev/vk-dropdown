@@ -197,30 +197,37 @@
 	<tr>
 		<th valign="top" width="120px" align="left">Параметр</th>
 		<th valign="top" align="left">Описание</th>
+		<th valign="top" width="60px" align="left">По умолчанию</th>
 	</tr>
 	<tr>
 		<td valign="top"><code>onInit</code></td>
-		<td valign="top">Инициализация дропдауна</td>
+		<td valign="top">Инициализация</td>
+		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>onDestroy</code></td>
-		<td valign="top">Разрушение дропдауна</td>
+		<td valign="top">Деинициализация</td>
+		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>onShow</code></td>
 		<td valign="top">Открытие списка</td>
+		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>onHide</code></td>
 		<td valign="top">Закрытие списка</td>
+		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>onSelect</code></td>
 		<td valign="top">Выбор элемента</td>
+		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>onUnselect</code></td>
 		<td valign="top">Отмена выбора</td>
+		<td valign="top"><code>null</code></td>
 	</tr>
 </table>
 
@@ -233,19 +240,19 @@
 	</tr>
 	<tr>
 		<td valign="top"><code>init()</code></td>
-		<td valign="top">Инициализировать дропдаун</td>
+		<td valign="top">Инициализация</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>destroy()</code></td>
-		<td valign="top">Разрушить дропдаун</td>
+		<td valign="top">Деинициализация</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>showList()</code></td>
-		<td valign="top">Открыть списка</td>
+		<td valign="top">Открыть список</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>hideList()</code></td>
-		<td valign="top">Закрыть списка</td>
+		<td valign="top">Закрыть список</td>
 	</tr>
 	<tr>
 		<td valign="top"><code>selectItem(id)</code></td>
@@ -257,7 +264,7 @@
 	</tr>
 </table>
 
-### Custom Builds
+## Custom Builds
 
 ```
 npm install
