@@ -16,7 +16,7 @@
     <script>
         const data = [{...}];
         const dropdown = new Dropdown("#drdw", { 
-            data: data,
+            items: data,
             // options
         });
     </script>
@@ -74,18 +74,18 @@
 		<td valign="top"><code>templateListItem</code></td>
 		<td valign="top">Шаблон вывода элемента списка</td>
 		<td valign="top"><code>function</code></td>
-		<td valign="top"><code></code></td>
+		<td valign="top"></td>
 	</tr>
-		<tr>
+	<tr>
 		<td valign="top"><code>templateSelectedItem</code></td>
 		<td valign="top">Шаблон вывода выбранного элемента</td>
 		<td valign="top"><code>function</code></td>
-		<td valign="top"><code></code></td>
+		<td valign="top"></td>
 	</tr>
 	<tr>
 		<td valign="top"><code>serverSearch</code></td>
-		<td valign="top">
-			Настройки поиска на сервере:
+		<td valign="top" colspan="3">
+			Настройки поиска на сервере.
 			<table width="100%">
 				<tr>
 					<th valign="top" width="120px" align="left">Параметр</th>
@@ -125,11 +125,137 @@
 				</tr>
 			</table>
 		</td>
-		<td valign="top"><code>object</code></td>
-		<td valign="top"></td>
+	</tr>
+	<tr>
+		<td valign="top"><code>classNames</code></td>
+		<td valign="top" colspan="3">
+			<table width="100%">
+				<tr>
+					<th valign="top" align="left">Key</th>
+					<th valign="top" align="left">Value</th>
+				</tr>
+				<tr>
+					<td valign="top"><code>container</code></td>
+					<td valign="top"><code>'dropdown'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>head</code></td>
+					<td valign="top"><code>'dropdown__head'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>selectedList</code></td>
+					<td valign="top"><code>'dropdown__selected'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>selectedItem</code></td>
+					<td valign="top"><code>'dropdown__s-item'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>removeButton</code></td>
+					<td valign="top"><code>'dropdown__remove-btn'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>addButton</code></td>
+					<td valign="top"><code>'dropdown__add-button'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>input</code></td>
+					<td valign="top"><code>'dropdown__input'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>arrow</code></td>
+					<td valign="top"><code>'dropdown__arrow'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>list</code></td>
+					<td valign="top"><code>'dropdown__list'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>listActive</code></td>
+					<td valign="top"><code>'dropdown__list_active'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>listItem</code></td>
+					<td valign="top"><code>'dropdown__item'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>listItemHighlight</code></td>
+					<td valign="top"><code>'dropdown__item_hover'</code></td>
+				</tr>
+				<tr>
+					<td valign="top"><code>message</code></td>
+					<td valign="top"><code>'dropdown__message'</code></td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 </table>
 
+## Callbacks
+
+<table width="100%">
+	<tr>
+		<th valign="top" width="120px" align="left">Параметр</th>
+		<th valign="top" align="left">Описание</th>
+	</tr>
+	<tr>
+		<td valign="top"><code>onInit</code></td>
+		<td valign="top">Инициализация дропдауна</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>onDestroy</code></td>
+		<td valign="top">Разрушение дропдауна</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>onShow</code></td>
+		<td valign="top">Открытие списка</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>onHide</code></td>
+		<td valign="top">Закрытие списка</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>onSelect</code></td>
+		<td valign="top">Выбор элемента</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>onUnselect</code></td>
+		<td valign="top">Отмена выбора</td>
+	</tr>
+</table>
+
+## Methods
+
+<table width="100%">
+	<tr>
+		<th valign="top" width="120px" align="left">Параметр</th>
+		<th valign="top" align="left">Описание</th>
+	</tr>
+	<tr>
+		<td valign="top"><code>init()</code></td>
+		<td valign="top">Инициализировать дропдаун</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>destroy()</code></td>
+		<td valign="top">Разрушить дропдаун</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>showList()</code></td>
+		<td valign="top">Открыть списка</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>hideList()</code></td>
+		<td valign="top">Закрыть списка</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>selectItem(id)</code></td>
+		<td valign="top">Выбрать элемент по ID</td>
+	</tr>
+	<tr>
+		<td valign="top"><code>unselectItem(id)</code></td>
+		<td valign="top">Отменить выбора элемента по ID</td>
+	</tr>
+</table>
 
 ### Custom Builds
 
