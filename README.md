@@ -197,7 +197,7 @@
 	<tr>
 		<th valign="top" width="120px" align="left">Параметр</th>
 		<th valign="top" align="left">Описание</th>
-		<th valign="top" width="60px" align="left">По умолчанию</th>
+		<th valign="top" align="left">По умолчанию</th>
 	</tr>
 	<tr>
 		<td valign="top"><code>onInit</code></td>
@@ -260,7 +260,7 @@
 	</tr>
 	<tr>
 		<td valign="top"><code>unselectItem(id)</code></td>
-		<td valign="top">Отменить выбора элемента по ID</td>
+		<td valign="top">Отменить выбор элемента по ID</td>
 	</tr>
 </table>
 
