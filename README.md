@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="drdw"></div>
-    <script type="text/javascript" src="dropdown.min.js"></script>
+    <script type="text/javascript" src="dropdown.js"></script>
     <script>
         const data = [{...}];
         const dropdown = new Dropdown("#drdw", { 

@@ -79,6 +79,7 @@ class Dropdown {
       onDestroy: null,
       onShow: null,
       onHide: null,
+      onChange: null,
       onSelect: null,
       onUnselect: null
     };
@@ -210,6 +211,7 @@ class Dropdown {
 
     // Callback
     runCallback(this.config.onSelect, this);
+    runCallback(this.config.onChange, this);
   }
 
   /**
@@ -229,6 +231,7 @@ class Dropdown {
 
     // Callback
     runCallback(this.config.onUnselect, this);
+    runCallback(this.config.onChange, this);
   }
 
   /*************************
