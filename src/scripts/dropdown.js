@@ -98,7 +98,7 @@ class Dropdown {
     this._onMouseOver = this._onMouseOver.bind(this);
 
     // Start
-    this.init(this.config.init);
+    this.init();
   }
 
   /************************
