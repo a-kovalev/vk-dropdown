@@ -220,11 +220,6 @@
 		<td valign="top"><code>null</code></td>
 	</tr>
 	<tr>
-		<td valign="top"><code>onChange</code></td>
-		<td valign="top">Выбор/Отмена элемента</td>
-		<td valign="top"><code>null</code></td>
-	</tr>
-	<tr>
 		<td valign="top"><code>onSelect</code></td>
 		<td valign="top">Выбор элемента</td>
 		<td valign="top"><code>null</code></td>
@@ -232,6 +227,11 @@
 	<tr>
 		<td valign="top"><code>onUnselect</code></td>
 		<td valign="top">Отмена выбора</td>
+		<td valign="top"><code>null</code></td>
+	</tr>
+	<tr>
+		<td valign="top"><code>onChange</code></td>
+		<td valign="top">Выбор/Отмена элемента</td>
 		<td valign="top"><code>null</code></td>
 	</tr>
 </table>

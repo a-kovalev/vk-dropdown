@@ -119,11 +119,11 @@
   },
 
   <span class="sn-comment">// Render items</span>
-  <span class="sn-method">templateListItem</span>: <span class="sn-args">item</span> <span class="sn-fn">=></span> {
+  <span class="sn-method">templateListItem</span>: <span class="sn-fn">function</span>(<span class="sn-args">item</span>) {
     <span class="sn-operator">return</span> <span class="sn-string">`...`</span>;
   },
 
-  <span class="sn-method">templateSelectedItem</span>: <span class="sn-args">item</span> <span class="sn-fn">=></span> {
+  <span class="sn-method">templateSelectedItem</span>: <span class="sn-fn">function</span>(<span class="sn-args">item</span>) {
     <span class="sn-operator">return</span> <span class="sn-string">`...`</span>;
   },
 
@@ -132,9 +132,9 @@
   <span class="sn-method">onDestroy</span>: <span class="sn-fn">function</span>() {},
   <span class="sn-method">onShow</span>: <span class="sn-fn">function</span>() {},
   <span class="sn-method">onHide</span>: <span class="sn-fn">function</span>() {},
-  <span class="sn-method">onChange</span>: <span class="sn-fn">function</span>() {},
   <span class="sn-method">onSelect</span>: <span class="sn-fn">function</span>() {},
-  <span class="sn-method">onUnselect</span>: <span class="sn-fn">function</span>() {}
+  <span class="sn-method">onUnselect</span>: <span class="sn-fn">function</span>() {},
+  <span class="sn-method">onChange</span>: <span class="sn-fn">function</span>() {}
 });
 
 <span class="sn-comment">
@@ -194,8 +194,11 @@
 			},
 			onUnselect: function() {
 				alert('onUnselect');
+			},
+			onChange: function() {
+				alert('onChange');
 			}
-		})
+		});
 
 		var clientSearch = new Dropdown("#client-search", {
 			items:data,
