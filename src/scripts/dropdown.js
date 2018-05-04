@@ -564,6 +564,12 @@ class Dropdown {
         activeItem = list[0];
       }
 
+      if(activeItem.classList.contains(this.config.classNames.message)) {
+        return;
+      }
+      
+      console.log(activeItem);
+
       this._highlightElement(activeItem);
       this._scrollToElem(activeItem, dir);
     };
